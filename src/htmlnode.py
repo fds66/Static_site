@@ -18,9 +18,11 @@ class HTMLNode():
     
     def props_to_html(self):
         if self.props:
-            href = "href"
-            target = "target"
-            return f' href="{self.props[href]}" target="{self.props[target]}"'
+            props_html = ""
+            for prop in self.props:
+                props_html += f' {prop}="{self.props[prop]}"' 
+            #f' href="{self.props[href]}" target="{self.props[target]}"'
+            return props_html
         else:
             return ""
     # href="https://www.google.com" target="_blank" 
@@ -33,3 +35,75 @@ class HTMLNode():
 
     def __repr__(self):
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
+    
+############################################################################################
+
+class LeafNode(HTMLNode):
+    def __init__(self,tag,value,props=None):
+        super().__init__(tag,value,None,props)
+        #self.props = props
+
+    def to_html(self):
+        if not self:
+            raise ValueError ("LeafNode has not value")
+        if self.tag == None:
+            return self.value
+        props_string = self.props_to_html()
+        return  f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
+        
+            
+        '''
+        Required format
+        LeafNode("p", "This is a paragraph of text.").to_html()
+        "<p>This is a paragraph of text.</p>"
+        LeafNode("a", "Click me!", {"href": "https://www.google.com"}).to_html()
+        '<a href="https://www.google.com">Click me!</a>'
+        '''
+
+    def __repr__(self):
+        return f"LeafNode({self.tag}, {self.value}, {self.props})"
+
+ ############################################################################################      
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, None, children, props)
+
+
+    def to_html(self):
+        if not self.children:
+            raise ValueError ("ParentNode has no children")
+        if self.tag == None:
+            raise ValueError ("ParentNode does not have a tag")
+        final_string = f"<{self.tag}{self.props_to_html()}>"
+        #strings=[]
+        for child in self.children:
+            final_string += child.to_html()
+        final_string += f"</{self.tag}>"
+        return final_string
+    
+    '''
+    Example given
+    node = ParentNode( "p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ],
+    )
+
+    node.to_html()
+    gives:
+    <p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>
+    if pretty printed it would look like this
+    <p>
+     <b>Bold text</b>
+     Normal text
+     <i>italic text</i>
+     Normal text
+    </p>
+
+'''
+    def __repr__(self):
+        return f"ParentNode({self.tag}, {self.children}, {self.props})"
+    
