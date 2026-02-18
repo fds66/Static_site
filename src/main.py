@@ -2,6 +2,8 @@ from enum import Enum
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode,LeafNode,ParentNode
 from textnode_to_htmlnode import text_node_to_html_node
+from split_nodes_delimiter import split_nodes_delimiter
+
 
 '''
 for reference
@@ -18,6 +20,13 @@ class TextType(Enum):
 def main():
     print("running main")
     
+
+    node = TextNode("This is text with an _italic_ word", TextType.TEXT)
+    new_nodes = split_nodes_delimiter([node], "**", TextType.ITALIC)
+    print(new_nodes)   
+
+
+    '''
     #new_node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
     #new_node = TextNode("This is some test text", TextType.BOLD)
     new_node = node = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
@@ -25,11 +34,6 @@ def main():
     print(result)
     
 
-
-
-
-
-    '''
     props = {"href": "https://www.google.com","target": "_blank",}
     #new_html_node = LeafNode("a","this is the text",props)
     new_html_node = LeafNode("p","this is the text")
