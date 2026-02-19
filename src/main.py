@@ -6,6 +6,7 @@ from textnode_to_htmlnode import text_node_to_html_node
 from split_nodes import split_nodes_delimiter,split_nodes_link,split_nodes_image
 from extract_markdown import extract_markdown_images,extract_markdown_links
 from text_to_textnodes import text_to_textnodes
+from blocks import markdown_to_blocks
 
 
 '''
@@ -22,11 +23,38 @@ class TextType(Enum):
 
 def main():
     print("running main")
+
+        
+    md = """
+    This is **bolded** paragraph
+
+    This is another paragraph with _italic_ text and `code` here
+    This is the same paragraph on a new line
+
+    - This is a list
+    - with items
+    """
+    blocks = markdown_to_blocks(md)
+    pprint.pprint(blocks)
+    
+    print(blocks)
+
+
+    '''expecting
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items",
+            ],
+        
+
+
+    
     text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
     result = text_to_textnodes(text)
     pprint.pprint(result)
     
-    '''
+  
     #text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
     #result = extract_markdown_images(text)
     #print(result)
