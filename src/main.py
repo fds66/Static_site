@@ -6,7 +6,7 @@ from textnode_to_htmlnode import text_node_to_html_node
 from split_nodes import split_nodes_delimiter,split_nodes_link,split_nodes_image
 from extract_markdown import extract_markdown_images,extract_markdown_links
 from text_to_textnodes import text_to_textnodes
-from blocks import markdown_to_blocks
+from blocks import markdown_to_blocks,block_to_block_type
 
 
 '''
@@ -24,7 +24,30 @@ class TextType(Enum):
 def main():
     print("running main")
 
-        
+    #text = """### this is a heading"""
+    #text = """>tommorow is another day\n>what will I do?"""
+    #text = """- must do this\n- must do that"""
+    text = """1. this is an ordered list\n2. what will happen?\n3. who knows"""
+    #text = """```\nthis is a code block```"""
+    #text = """1. do the dishes\n2. clean the floor"""
+    #text = """some randowm text```"""
+
+    
+
+
+
+
+
+
+    print(text)
+    block_type = block_to_block_type(text)
+    print(block_type)
+
+
+
+
+
+    '''       
     md = """
     This is **bolded** paragraph
 
@@ -39,7 +62,7 @@ def main():
     
     print(blocks)
 
-
+    '''
     '''expecting
             [
                 "This is **bolded** paragraph",
