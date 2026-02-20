@@ -7,7 +7,7 @@ from blocks import markdown_to_blocks, block_to_block_type,BlockType
 
 
 
-class Test_extract_markdown(unittest.TestCase):
+class Test_markdown_to_blocks(unittest.TestCase):
 
     
 

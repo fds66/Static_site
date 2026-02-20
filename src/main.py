@@ -7,41 +7,88 @@ from split_nodes import split_nodes_delimiter,split_nodes_link,split_nodes_image
 from extract_markdown import extract_markdown_images,extract_markdown_links
 from text_to_textnodes import text_to_textnodes
 from blocks import markdown_to_blocks,block_to_block_type
+from markdown_to_html_node import markdown_to_html_node
 
 
-'''
-for reference
-class TextType(Enum):
-    TEXT = "text(plain)"
-    BOLD = "**Bold text**"
-    ITALIC = "_Italic text_"
-    CODE = "'Code text'"
-    LINK = "[anchor text](url)"
-    IMAGE = "![alt text](url)"
-    '''
 
 
 def main():
     print("running main")
 
+    
+    md = """
+    ```
+    This is text that _should_ remain
+    the **same** even with inline stuff
+    ```
+    """
+    
+    #md = """
+    #1. Make food
+    #2. Feed the dog
+    #3. Go for a walk
+    #"""
+
+    #md="""
+    #- prepare a lesson
+    #- ace the tests
+    #- go on to the next lesson
+    #"""
+
+
+
+
+
+
+    '''
+    md = """
+    ### This is the heading number 3
+    """
+
+    md = """
+    > This is to quote a poem from a poet\n> when I see a daffodil\n> I write a poem about it"""
+
+    
+    md = """
+    ```
+    This is text that _should_ remain
+    the **same** even with inline stuff
+    ```
+    """
+    
+
+    md = """
+    This is **bolded** paragraph
+    text in a p
+    tag here
+
+    This is another paragraph with _italic_ text and `code` here
+
+    """
+    '''
+    node = markdown_to_html_node(md)
+    #print(node)
+    html = node.to_html()
+    print(html)
+
+
+
+
+
+
+
+
+
     #text = """### this is a heading"""
     #text = """>tommorow is another day\n>what will I do?"""
     #text = """- must do this\n- must do that"""
-    text = """1. this is an ordered list\n2. what will happen?\n3. who knows"""
+    #text = """1. this is an ordered list\n2. what will happen?\n3. who knows"""
     #text = """```\nthis is a code block```"""
     #text = """1. do the dishes\n2. clean the floor"""
     #text = """some randowm text```"""
-
-    
-
-
-
-
-
-
-    print(text)
-    block_type = block_to_block_type(text)
-    print(block_type)
+    #print(text)
+    #block_type = block_to_block_type(text)
+    #print(block_type)
 
 
 

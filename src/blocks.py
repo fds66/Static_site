@@ -14,6 +14,9 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered list"
 
 
+
+
+
 ####################################################
 #Split blocks
 
@@ -46,12 +49,22 @@ def block_to_block_type(markdown_block):
     # ORDERED LIST every line must start with a number followed by a full stop
 
     # PARAGRAPH is anything else that doesn't meet the above criteria
+
+    
+   # archive just in case
+   # headings_pattern = r'(^#{1,6} )(.*)'
+   # code_pattern = r'(^`{3}\n).*(`{3}$)' # with dotall single line s
+   # quote_pattern = r'(^>).*' # do over each line
+   # unordered_pattern = r'(^- ).*' # do over each line
+   # ordered_pattern = r'(^\d+)(\. ).*' # do over each line
+    #default is paragraph
+   
         
-    headings_pattern = r'(^#{1,6} )(.*)'
-    code_pattern = r'(^`{3}\n).*(`{3}$)' # with dotall single line s
-    quote_pattern = r'(^>).*' # with multiline m
-    unordered_pattern = r'(^- ).*' # with multiline
-    ordered_pattern = r'(^\d+)(\. ).*' #with multiline
+    headings_pattern = block_type_to_regex(BlockType.HEADING)
+    code_pattern = block_type_to_regex(BlockType.CODE)
+    quote_pattern = block_type_to_regex(BlockType.QUOTE)
+    unordered_pattern = block_type_to_regex(BlockType.UNORDERED_LIST)
+    ordered_pattern = block_type_to_regex(BlockType.ORDERED_LIST)
     #default is paragraph
 
     
@@ -61,7 +74,8 @@ def block_to_block_type(markdown_block):
     #print(f"code match {code_match}")
 
     #these methods need checking line by line so split it into line
-    markdown_lines = markdown_block.split("\n")
+    #markdown_lines = markdown_block.split("\n")
+    markdown_lines = markdown_block.splitlines(keepends=True)
     #print(f"markdown_lines {markdown_lines}")
     #use a list of flags and check if all are true
     
@@ -75,7 +89,7 @@ def block_to_block_type(markdown_block):
 
         quote_match = re.search(quote_pattern,line)
         #print(f"quote match {quote_match}")
-            
+         
         quote_flags.append(bool(quote_match))
             
 
@@ -122,4 +136,28 @@ def block_to_block_type(markdown_block):
 
     return block_type
 
-    
+def block_type_to_regex(block_type):
+    match block_type:
+
+        case BlockType.CODE :
+            regex_string = r'(^`{3}\n)(.*)(`{3}$)'
+
+
+        case BlockType.HEADING:
+            regex_string = r'(^#{1,6} )(.*)'
+
+        case BlockType.QUOTE:
+            regex_string = r'(^>)(.*)'
+
+        case BlockType.UNORDERED_LIST :
+            regex_string = r'(^- )(.*)'
+
+
+        case BlockType.ORDERED_LIST:
+            regex_string = r'(^\d+)(\. )(.*)'
+
+        case _:
+            raise Exception ("block_type not recognised in block_type to regex")
+
+    return regex_string
+
