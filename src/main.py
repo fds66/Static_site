@@ -21,7 +21,8 @@ from generate_title_and_page import extract_title, generate_page,generate_pages_
 
 def main():
 
-    basepath = sys.argv
+    basepath = sys.argv[1]
+    print (sys.argv)
     if not basepath:
         basepath = "/"
     
