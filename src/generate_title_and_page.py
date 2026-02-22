@@ -67,7 +67,7 @@ def generate_page(from_path, template_path, dest_path):
     #insert the title and contents into the template 
     full_html = template.replace("{{ Title }}",title)
     full_html = full_html.replace("{{ Content }}",html_content)
-    print(full_html)
+    #print(full_html)
 
     #If the destination doesn't exist then create it
     try:
@@ -79,5 +79,36 @@ def generate_page(from_path, template_path, dest_path):
 
     except Exception as e:
         raise Exception ("writing to the file failed")
+    
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    content_list = os.listdir(dir_path_content)
+    print(content_list)
+
+    #crawl every entry in the content directory
+
+    for item in content_list:
+        item_path = os.path.join(dir_path_content,item)
+        dest_path = os.path.join(dest_dir_path,item)
+        if os.path.isfile(item_path):
+            print (f"{item} is a file")
+            file_name, file_extension = os.path.splitext(item)
+            if file_extension == ".md":
+                print ("this is a markdown file")
+                print(f"new file will be {file_name} with .html added")
+                html_file_name = file_name + ".html"
+                html_file_path = os.path.join(dest_dir_path,html_file_name)
+                print (html_file_name, html_file_path)
+                generate_page(item_path,template_path, html_file_path)
+            else:
+                continue
+        if os.path.isdir(item_path):
+            print(f"{item} is a directory")
+            print(f"destination path is {dest_path}")
+            generate_pages_recursive(item_path, template_path, dest_path)
+    #for each markdown file found, generate a new .html file using the same template
+    #write the generated pages to the public directory in the same directory structure
+    #generate_page(from_path, template_path, dest_path)
 
 

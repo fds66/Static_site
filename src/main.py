@@ -13,7 +13,7 @@ from text_to_textnodes import text_to_textnodes
 from blocks import markdown_to_blocks,block_to_block_type
 from markdown_to_html_node import markdown_to_html_node
 from copy_from_sourece_dir_to_dest_dir import copy_source_dir_to_dest_dir
-from generate_title_and_page import extract_title, generate_page
+from generate_title_and_page import extract_title, generate_page,generate_pages_recursive
 
 
 
@@ -21,27 +21,29 @@ from generate_title_and_page import extract_title, generate_page
 def main():
     print("running main")
 
-   
+    copy = True
 
-    
+    if copy == True:
    
-    #copy everything from static to public
+        #copy everything from static to public
 
-    source_directory = "./static"   
-    destination_directory = "./public"
-    #if the destination directory already exists delete it and all its contents
-    if os.path.exists(destination_directory):
-        print("deleting public directory")
-        rmtree_result = shutil.rmtree(destination_directory)
-        print(rmtree_result)
-    copy_source_dir_to_dest_dir(source_directory,destination_directory)
+        source_directory = "./static"   
+        destination_directory = "./public"
+        #if the destination directory already exists delete it and all its contents
+        if os.path.exists(destination_directory):
+            print("deleting public directory")
+            rmtree_result = shutil.rmtree(destination_directory)
+            print(rmtree_result)
+        copy_source_dir_to_dest_dir(source_directory,destination_directory)
 
     #paths
-    from_path = "./content/index.md"
+    content_path_dir = "./content"
     template = "./template.html"
-    destination = "./public/index.html"
+    destination_dir = "./public"
 
-    generate_page(from_path, template, destination)
+   
+    generate_pages_recursive(content_path_dir, template, destination_dir)
+
     return
     
 
