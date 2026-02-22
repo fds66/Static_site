@@ -66,9 +66,12 @@ def generate_page(from_path, template_path, dest_path, basepath):
 
     #insert the title and contents into the template 
     full_html = template.replace("{{ Title }}",title)
-    full_html = full_html.replace('href="/',f'href="{basepath}')
-    full_html = full_html.replace('src="/',f'src="{basepath}')
     full_html = full_html.replace("{{ Content }}",html_content)
+    new_href_str = f'href="{basepath}'
+    full_html = full_html.replace('href="/',new_href_str)
+    new_src_str = f'src="{basepath}'
+    full_html = full_html.replace('src="/',new_src_str)
+    
     #print(full_html)
 
     #If the destination doesn't exist then create it
