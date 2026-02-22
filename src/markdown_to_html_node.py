@@ -149,7 +149,8 @@ def text_to_children(text,block_type):
                 line = line.lstrip(">")
                 line = line.strip()
                 amended_lines.append(line)
-            child_nodes = text_to_textnodes(text)
+            whole_content = " ".join(amended_lines)
+            child_nodes = text_to_textnodes(whole_content)
             #convert the child text nodes into html leaf nodes and add them to the child_html_nodes list
             child_html_nodes = child_nodes_to_leaf_nodes(child_nodes)
             return child_html_nodes
