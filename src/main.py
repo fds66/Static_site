@@ -1,5 +1,9 @@
 from enum import Enum
 import pprint
+import os
+import shutil
+
+
 from textnode import TextNode, TextType
 from htmlnode import HTMLNode,LeafNode,ParentNode
 from textnode_to_htmlnode import text_node_to_html_node
@@ -16,8 +20,16 @@ from copy_from_sourece_dir_to_dest_dir import copy_source_dir_to_dest_dir
 def main():
     print("running main")
 
-    
-    copy_source_dir_to_dest_dir("static","public")
+    #copy everything from static to public
+
+    source_directory = "./static"   
+    destination_directory = "./public"
+    #if the destination directory already exists delete it and all its contents
+    if os.path.exists(destination_directory):
+        print("deleting public directory")
+        rmtree_result = shutil.rmtree(destination_directory)
+        print(rmtree_result)
+    copy_source_dir_to_dest_dir(source_directory,destination_directory)
     return
 
     
