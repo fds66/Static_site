@@ -17,9 +17,12 @@ class HTMLNode():
         raise NotImplementedError ("Not implemented yet")
     
     def props_to_html(self):
+        #print(f"props is {self.props} for this {self.__repr__()}\n")
         if self.props:
             props_html = ""
             for prop in self.props:
+                #print(f"prop is {prop}")
+                #print(f" self.props[prop] is {self.props[prop]}/n")
                 props_html += f' {prop}="{self.props[prop]}"' 
             #f' href="{self.props[href]}" target="{self.props[target]}"'
             return props_html
@@ -48,8 +51,10 @@ class LeafNode(HTMLNode):
             raise ValueError ("LeafNode has not value")
         if self.tag == None:
             return self.value
-        props_string = self.props_to_html()
-        return  f"<{self.tag}{props_string}>{self.value}</{self.tag}>"
+        #print(f"processing {self.__repr__()}")
+        #props_string = self.props_to_html()
+        
+        return  f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
         
             
         '''

@@ -143,6 +143,8 @@ def text_to_children(text,block_type):
 
         case BlockType.QUOTE :
             text = text.replace("\n","<br>")
+            text = text.replace(">","")
+            text = text.strip()
             child_nodes = text_to_textnodes(text)
             #convert the child text nodes into html leaf nodes and add them to the child_html_nodes list
             child_html_nodes = child_nodes_to_leaf_nodes(child_nodes)

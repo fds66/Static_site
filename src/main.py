@@ -13,6 +13,7 @@ from text_to_textnodes import text_to_textnodes
 from blocks import markdown_to_blocks,block_to_block_type
 from markdown_to_html_node import markdown_to_html_node
 from copy_from_sourece_dir_to_dest_dir import copy_source_dir_to_dest_dir
+from generate_title_and_page import extract_title, generate_page
 
 
 
@@ -20,6 +21,10 @@ from copy_from_sourece_dir_to_dest_dir import copy_source_dir_to_dest_dir
 def main():
     print("running main")
 
+   
+
+    
+   
     #copy everything from static to public
 
     source_directory = "./static"   
@@ -30,7 +35,17 @@ def main():
         rmtree_result = shutil.rmtree(destination_directory)
         print(rmtree_result)
     copy_source_dir_to_dest_dir(source_directory,destination_directory)
+
+    #paths
+    from_path = "./content/index.md"
+    template = "./template.html"
+    destination = "./public/index.html"
+
+    generate_page(from_path, template, destination)
     return
+    
 
     
+
+
 main()
