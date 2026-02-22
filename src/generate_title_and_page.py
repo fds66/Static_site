@@ -42,7 +42,7 @@ def extract_title(markdown):
 
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     #print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     try:
         with open(from_path,"r") as f:
@@ -66,6 +66,8 @@ def generate_page(from_path, template_path, dest_path):
 
     #insert the title and contents into the template 
     full_html = template.replace("{{ Title }}",title)
+    full_html = full_html.replace('href="/',f'href="{basepath}')
+    full_html = full_html.replace('src="/',f'src="{basepath}')
     full_html = full_html.replace("{{ Content }}",html_content)
     #print(full_html)
 
@@ -82,7 +84,7 @@ def generate_page(from_path, template_path, dest_path):
     
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     content_list = os.listdir(dir_path_content)
     print(content_list)
 
@@ -100,13 +102,13 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
                 html_file_name = file_name + ".html"
                 html_file_path = os.path.join(dest_dir_path,html_file_name)
                 print (html_file_name, html_file_path)
-                generate_page(item_path,template_path, html_file_path)
+                generate_page(item_path,template_path, html_file_path, basepath)
             else:
                 continue
         if os.path.isdir(item_path):
             print(f"{item} is a directory")
             print(f"destination path is {dest_path}")
-            generate_pages_recursive(item_path, template_path, dest_path)
+            generate_pages_recursive(item_path, template_path, dest_path, basepath)
     #for each markdown file found, generate a new .html file using the same template
     #write the generated pages to the public directory in the same directory structure
     #generate_page(from_path, template_path, dest_path)

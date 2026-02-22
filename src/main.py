@@ -2,6 +2,7 @@ from enum import Enum
 import pprint
 import os
 import shutil
+import sys
 
 
 from textnode import TextNode, TextType
@@ -19,6 +20,13 @@ from generate_title_and_page import extract_title, generate_page,generate_pages_
 
 
 def main():
+
+    basepath = sys.argv
+    if not basepath:
+        basepath = "/"
+    
+
+
     print("running main")
 
     copy = True
@@ -39,10 +47,11 @@ def main():
     #paths
     content_path_dir = "./content"
     template = "./template.html"
-    destination_dir = "./public"
+    #destination_dir = "./public"
+    destination_dir = "./docs"
 
    
-    generate_pages_recursive(content_path_dir, template, destination_dir)
+    generate_pages_recursive(content_path_dir, template, destination_dir, basepath)
 
     return
     
