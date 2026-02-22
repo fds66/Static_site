@@ -25,7 +25,11 @@ def main():
     if not basepath:
         basepath = "/"
     
-
+     #paths
+    content_path_dir = "./content"
+    template = "./template.html"
+    #destination_dir = "./public"
+    destination_dir = "./docs"
 
     print("running main")
 
@@ -36,19 +40,15 @@ def main():
         #copy everything from static to public
 
         source_directory = "./static"   
-        destination_directory = "./public"
+        
         #if the destination directory already exists delete it and all its contents
-        if os.path.exists(destination_directory):
+        if os.path.exists(destination_dir):
             print("deleting public directory")
-            rmtree_result = shutil.rmtree(destination_directory)
+            rmtree_result = shutil.rmtree(destination_dir)
             print(rmtree_result)
-        copy_source_dir_to_dest_dir(source_directory,destination_directory)
+        copy_source_dir_to_dest_dir(source_directory,destination_dir)
 
-    #paths
-    content_path_dir = "./content"
-    template = "./template.html"
-    #destination_dir = "./public"
-    destination_dir = "./docs"
+   
 
    
     generate_pages_recursive(content_path_dir, template, destination_dir, basepath)
